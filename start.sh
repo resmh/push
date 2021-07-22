@@ -56,7 +56,7 @@ else
 fi
 
 # Push to main branch
-git pull "${remote_repo}"
+#git pull "${remote_repo}"
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 echo "Main repo pushed."
 
