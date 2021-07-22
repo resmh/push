@@ -55,6 +55,7 @@ else
 fi
 
 # Push to main branch
+git pull
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 
 # Optionally push to dist branch
