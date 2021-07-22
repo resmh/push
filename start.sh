@@ -58,10 +58,12 @@ fi
 # Push to main branch
 git pull "${remote_repo}"
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+echo "Main repo pushed."
 
 # Optionally push to dist branch
 if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
     git checkout -f --recurse-submodules "${INPUT_DISTBRANCH}"
+    echo "Dist repo checked out."
     fcnt=${#INPUT_DISTFILES[@]}
     # for (( i=0; i<fcnt; i++ )); do rm "${INPUT_DISTFILES[i]}"; done
     # git pull "${remote_repo}"
@@ -76,6 +78,6 @@ if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
     else
         git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
     fi
-    
+
     git push "${remote_repo}" HEAD:"${INPUT_DISTBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 fi
