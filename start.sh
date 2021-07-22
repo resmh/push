@@ -55,13 +55,13 @@ else
 fi
 
 # Push to main branch
-git pull
+git pull "${remote_repo}"
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 
 # Optionally push to dist branch
 if [ ! "${INPUT_CHERRYPICKBRANCH}" == "" ]; then
     git checkout -f --recurse-submodules "${INPUT_CHERRYPICKBRANCH}"
-    git pull
+    git pull "${remote_repo}"
     git cherry-pick $commit
     git push "${remote_repo}" HEAD:"${INPUT_CHERRYPICKBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 fi
