@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -10,7 +10,8 @@ INPUT_COAUTHOR_EMAIL=${INPUT_COAUTHOR_EMAIL:-''}
 INPUT_COAUTHOR_NAME=${INPUT_COAUTHOR_NAME:-''}
 INPUT_MESSAGE=${INPUT_MESSAGE:-"$timestamp [$commit]"}
 INPUT_BRANCH=${INPUT_BRANCH:-master}
-INPUT_CHERRYPICKBRANCH=$INPUT_CHERRYPICKBRANCH
+INPUT_DISTBRANCH=$INPUT_DISTBRANCH
+INPUT_DISTFILES=$INPUT_DISTFILES
 INPUT_FORCE=${INPUT_FORCE:-false}
 INPUT_TAGS=${INPUT_TAGS:-false}
 INPUT_EMPTY=${INPUT_EMPTY:-false}
@@ -59,9 +60,23 @@ git pull "${remote_repo}"
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 
 # Optionally push to dist branch
-if [ ! "${INPUT_CHERRYPICKBRANCH}" == "" ]; then
-    git checkout -f --recurse-submodules "${INPUT_CHERRYPICKBRANCH}"
+if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
+    git checkout -f --recurse-submodules "${INPUT_DISTBRANCH}"
     git pull "${remote_repo}"
-    git cherry-pick $commit
-    git push "${remote_repo}" HEAD:"${INPUT_CHERRYPICKBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+    
+    fcnt=${#INPUT_DISTFILES[@]}
+    for ((i=0; i<fcnt; i++)); do
+        git checkout "${INPUT_BRANCH}" -- "${INPUT_DISTFILES[i]"
+    done
+
+    if [ -n "${INPUT_COAUTHOR_EMAIL}" ] && [ -n "${INPUT_COAUTHOR_NAME}" ]; then
+        git commit -m "${INPUT_MESSAGE}
+
+
+    Co-authored-by: ${INPUT_COAUTHOR_NAME} <${INPUT_COAUTHOR_EMAIL}>" $_EMPTY || exit 0
+    else
+        git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
+    fi
+    
+    git push "${remote_repo}" HEAD:"${INPUT_DISTBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 fi
