@@ -30,8 +30,11 @@ inputs:
     description: 'Destination branch to push changes'
     required: false
     default: 'master'
-  cherrypickbranch:
+  distbranch:
     description: 'Distribution branch to push changes'
+    required: false
+  distfiles:
+    description: 'Files to pushed to the distribution branch'
     required: false
   empty:
     description: 'Allow empty commit'
