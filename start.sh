@@ -57,7 +57,8 @@ fi
 
 # Push to main branch
 #git pull "${remote_repo}"
-git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+#git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+git push "${remote_repo}" "${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 echo "Main repo pushed."
 
 # Optionally push to dist branch
@@ -79,5 +80,5 @@ if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
         git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
     fi
 
-    git push "${remote_repo}" HEAD:"${INPUT_DISTBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+    git push "${remote_repo}" "${INPUT_DISTBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 fi
