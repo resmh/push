@@ -60,6 +60,7 @@ git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_
 # Optionally push to dist branch
 if [ ! "${INPUT_CHERRYPICKBRANCH}" == "" ]; then
     git checkout -f --recurse-submodules "${INPUT_CHERRYPICKBRANCH}"
+    git pull
     git cherry-pick $commit
     git push "${remote_repo}" HEAD:"${INPUT_CHERRYPICKBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 fi
