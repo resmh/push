@@ -8,7 +8,7 @@ INPUT_AUTHOR_EMAIL=${INPUT_AUTHOR_EMAIL:-'github-actions[bot]@users.noreply.gith
 INPUT_AUTHOR_NAME=${INPUT_AUTHOR_NAME:-'github-actions[bot]'}
 INPUT_COAUTHOR_EMAIL=${INPUT_COAUTHOR_EMAIL:-''}
 INPUT_COAUTHOR_NAME=${INPUT_COAUTHOR_NAME:-''}
-INPUT_MESSAGE=${INPUT_MESSAGE:-"$timestamp [$commit]"}
+INPUT_MESSAGE=${INPUT_MESSAGE:-'$timestamp [$commit]'}
 INPUT_BRANCH=${INPUT_BRANCH:-master}
 INPUT_DISTBRANCH=$INPUT_DISTBRANCH
 INPUT_DISTFILES=$INPUT_DISTFILES
@@ -56,7 +56,6 @@ else
 fi
 
 # Push to main branch
-#git pull "${remote_repo}"
 git push "${remote_repo}" "${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 
 # Optionally push to dist branch
