@@ -63,8 +63,8 @@ git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_
 if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
     git checkout -f --recurse-submodules "${INPUT_DISTBRANCH}"
     fcnt=${#INPUT_DISTFILES[@]}
-    for (( i=0; i<fcnt; i++ )); do rm "${INPUT_DISTFILES[i]}"; done
-    git pull "${remote_repo}"
+    # for (( i=0; i<fcnt; i++ )); do rm "${INPUT_DISTFILES[i]}"; done
+    # git pull "${remote_repo}"
     
     for (( i=0; i<fcnt; i++ )); do rm "${INPUT_DISTFILES[i]}"; git checkout -f "${INPUT_BRANCH}" -- "${INPUT_DISTFILES[i]}"; done
 
