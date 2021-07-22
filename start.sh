@@ -59,7 +59,7 @@ git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_
 
 # Optionally push to dist branch
 if [ ! "${INPUT_CHERRYPICKBRANCH}" == "" ]; then
-    git checkout "${INPUT_CHERRYPICKBRANCH}"
+    git checkout -f "${INPUT_CHERRYPICKBRANCH}"
     git cherry-pick $commit
     git push "${remote_repo}" HEAD:"${INPUT_CHERRYPICKBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
 fi
