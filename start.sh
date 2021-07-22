@@ -2,13 +2,15 @@
 set -e
 
 timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+commit=$(git rev-parse --verify HEAD)
 
 INPUT_AUTHOR_EMAIL=${INPUT_AUTHOR_EMAIL:-'github-actions[bot]@users.noreply.github.com'}
 INPUT_AUTHOR_NAME=${INPUT_AUTHOR_NAME:-'github-actions[bot]'}
 INPUT_COAUTHOR_EMAIL=${INPUT_COAUTHOR_EMAIL:-''}
 INPUT_COAUTHOR_NAME=${INPUT_COAUTHOR_NAME:-''}
-INPUT_MESSAGE=${INPUT_MESSAGE:-"chore: autopublish ${timestamp}"}
+INPUT_MESSAGE=${INPUT_MESSAGE:-"${timestamp} [${commit}]"}
 INPUT_BRANCH=${INPUT_BRANCH:-master}
+INPUT_CHERRYPICKBRANCH=$INPUT_CHERRYPICKBRANCH
 INPUT_FORCE=${INPUT_FORCE:-false}
 INPUT_TAGS=${INPUT_TAGS:-false}
 INPUT_EMPTY=${INPUT_EMPTY:-false}
@@ -52,4 +54,12 @@ else
     git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
 fi
 
+# Push to main branch
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+
+# Optionally push to dist branch
+if [ ! "${INPUT_CHERRYPICKBRANCH}" == "" ]; then
+    git checkout "${INPUT_CHERRYPICKBRANCH}"
+    git cherry-pick $commit
+    git push "${remote_repo}" HEAD:"${INPUT_CHERRYPICKBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+fi
