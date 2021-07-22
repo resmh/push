@@ -56,20 +56,16 @@ else
 fi
 
 # Push to main branch
-git pull "${remote_repo}"
-#git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
+#git pull "${remote_repo}"
 git push "${remote_repo}" "${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
-echo "Main repo pushed."
 
 # Optionally push to dist branch
 if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
     git checkout -f --recurse-submodules "${INPUT_DISTBRANCH}"
-    echo "Dist repo checked out."
-    fcnt=${#INPUT_DISTFILES[@]}
-    # for (( i=0; i<fcnt; i++ )); do rm "${INPUT_DISTFILES[i]}"; done
-    # git pull "${remote_repo}"
     
-    for (( i=0; i<fcnt; i++ )); do rm "${INPUT_DISTFILES[i]}"; git checkout -f "${INPUT_BRANCH}" -- "${INPUT_DISTFILES[i]}"; done
+    IFS=':' read -r -a DISTFILES <<< "${INPUT_DISTFILES}"
+    fcnt=${#DISTFILES[@]}
+    for (( i=0; i<fcnt; i++ )); do git checkout -f "${INPUT_BRANCH}" -- "${DISTFILES[i]}"; done
 
     if [ -n "${INPUT_COAUTHOR_EMAIL}" ] && [ -n "${INPUT_COAUTHOR_NAME}" ]; then
         git commit -m "${INPUT_MESSAGE}
