@@ -65,7 +65,7 @@ if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
     git pull "${remote_repo}"
     
     fcnt=${#INPUT_DISTFILES[@]}
-    for (( i=0; i<fcnt; i++ )); do git checkout "${INPUT_BRANCH} -- ${INPUT_DISTFILES[i]"; done
+    for (( i=0; i<fcnt; i++ )); do git checkout "${INPUT_BRANCH}" -- "${INPUT_DISTFILES[i]}"; done
 
     if [ -n "${INPUT_COAUTHOR_EMAIL}" ] && [ -n "${INPUT_COAUTHOR_NAME}" ]; then
         git commit -m "${INPUT_MESSAGE}
