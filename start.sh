@@ -8,7 +8,7 @@ INPUT_AUTHOR_EMAIL=${INPUT_AUTHOR_EMAIL:-'github-actions[bot]@users.noreply.gith
 INPUT_AUTHOR_NAME=${INPUT_AUTHOR_NAME:-'github-actions[bot]'}
 INPUT_COAUTHOR_EMAIL=${INPUT_COAUTHOR_EMAIL:-''}
 INPUT_COAUTHOR_NAME=${INPUT_COAUTHOR_NAME:-''}
-INPUT_MESSAGE=${INPUT_MESSAGE:-'$timestamp [$commit]'}
+INPUT_MESSAGE=${INPUT_MESSAGE:-'${timestamp} [${commit}]'}
 INPUT_BRANCH=${INPUT_BRANCH:-master}
 INPUT_DISTBRANCH=$INPUT_DISTBRANCH
 INPUT_DISTFILES=$INPUT_DISTFILES
@@ -52,7 +52,7 @@ if [ -n "${INPUT_COAUTHOR_EMAIL}" ] && [ -n "${INPUT_COAUTHOR_NAME}" ]; then
 
 Co-authored-by: ${INPUT_COAUTHOR_NAME} <${INPUT_COAUTHOR_EMAIL}>" $_EMPTY || exit 0
 else
-    git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
+    git commit -m "${INPUT_MESSAGE}" $_EMPTY || exit 0
 fi
 
 # Push to main branch
@@ -72,7 +72,7 @@ if [ ! "${INPUT_DISTBRANCH}" == "" ]; then
 
     Co-authored-by: ${INPUT_COAUTHOR_NAME} <${INPUT_COAUTHOR_EMAIL}>" $_EMPTY || exit 0
     else
-        git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
+        git commit -m "${INPUT_MESSAGE}" $_EMPTY || exit 0
     fi
 
     git push "${remote_repo}" "${INPUT_DISTBRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;
