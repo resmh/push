@@ -40,6 +40,7 @@ fi
 
 cd "${INPUT_DIRECTORY}"
 
+exit 0
 #remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
 remote_repo="ssh://git@github.com/${REPOSITORY}.git"
 
