@@ -20,7 +20,7 @@ INPUT_EMPTY=${INPUT_EMPTY:-false}
 INPUT_DIRECTORY=${INPUT_DIRECTORY:-'.'}
 REPOSITORY=${INPUT_REPOSITORY:-$GITHUB_REPOSITORY}
 
-echo "Push to branch $INPUT_BRANCH";
+echo "Push to branch $INPUT_BRANCH of $REPOSITORY";
 [ -z "${INPUT_GITHUB_TOKEN}" ] && {
     echo 'Missing input "github_token: ${{ secrets.GITHUB_TOKEN }}".';
     exit 1;
@@ -41,6 +41,7 @@ fi
 cd "${INPUT_DIRECTORY}"
 
 remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
+#remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
 
 git config http.sslVerify false
 git config --local user.email "${INPUT_AUTHOR_EMAIL}"
